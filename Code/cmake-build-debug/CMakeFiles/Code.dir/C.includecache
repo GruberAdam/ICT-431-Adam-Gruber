@@ -9,4 +9,8 @@
 C:/Users/Adam.GRUBER/Documents/GitHub/ICT-431-Adam-Gruber/Code/main.c
 stdio.h
 -
+stdlib.h
+-
+time.h
+-
 
