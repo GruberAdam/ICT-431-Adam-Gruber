@@ -10,27 +10,26 @@
 #include <windows.h>
 #include "Menu.h"
 #pragma  execution_character_set("utf-8")
-int nombre_de_bateaux_coule = 0;
-int colonnes,lignes;
-int colonne_cordonnee = 0,ligne_cordonnee = 0;
-int random_row = 0,random_column = 0;
-char display[10][10];
-int hidden[10][10];
-int ship_2_block[4][4];
+int nombre_de_bateaux_coule = 0; //Compte le nombre de bateau coulé
+int colonnes,lignes; //nb de colonne est de lignes
+int colonne_cordonnee = 0,ligne_cordonnee = 0;// Les cordonées
+int random_row = 0,random_column = 0;//
+char display[10][10];//tableau affiché
+int hidden[10][10];//tableau cache
+int ship_2_block[4][4];//tableau avec les cordonnées des bateaux
 int t,z;
-char colonne;
-int displayComp [8];
-char nom_pirate;
-int HighScoreSecondsInt;
-char HighScoreName[MAXCHAR];
-char HighScoreSeconds[MAXCHAR];
-FILE *fp;
-char* filename = "Score.txt";
+char colonne;//Pour demander la colonne
+int displayComp [8];//pour changer la couleur
+char nom_pirate;//son nom de pirate
+int HighScoreSecondsInt;//pour changer le caractère ascii en int
+char HighScoreName[MAXCHAR];//Meilleur joueur (nom)
+char HighScoreSeconds[MAXCHAR];//Meilleur joueur (temps)
+FILE *fp;//variable txt
+char* filename = "Score.txt";//nom du fichier
 
 
 
 int main() {
-
     menu();                     //Apelle la fonction "menu"
 
     printf("\nQuel est votre nom de pirate :");
@@ -40,12 +39,12 @@ int main() {
     float temps;
     clock_t t1, t2;
 
-    t1 = clock();
+    t1 = clock();                //temps au debut
     generateShips();             //Apelle la fonction "generateShips"
     displayArray();              //Apelle la fonction "displayArray"
     game();                      //Apelle la fonction "game"
-    t2 = clock();
-    temps = (int)(t2-t1)/CLOCKS_PER_SEC;
+    t2 = clock();                //temps a la fin
+    temps = (int)(t2-t1)/CLOCKS_PER_SEC; //temps échoué pendant le jeu (en secondes)
     printf("\n ton temps = %0.0f secondes\n",temps);
 
     if (temps<HighScoreSecondsInt){          //Si le temps a été meilleur que le meilleur temps précedent il prend ça place
@@ -75,7 +74,6 @@ int game() {
             scanf("%d", &ligne_cordonnee);     //Stocke la ligne dans une varible
 
             do {
-                colonne_cordonnee = 0;
                 printf("Entrez la colonne ENTRE A - J:");
                 scanf("%s", &colonne);         //stocke la "lettre" dans une varible char
                 colonne_cordonnee = colonne;   //convertis la lettre en int donc en ascii
@@ -107,9 +105,9 @@ int game() {
         }
         z=0;
         while (z<4) {
-            displayComp[1] = display[ship_2_block[0][z]][ship_2_block[1][z]] + 256;             //La cordonée d'un bout de bateau + 256 =
-            displayComp[2] = display[ship_2_block[2][z]][ship_2_block[3][z]] + 256;
-            if ((displayComp[1] == 177) && (displayComp[2] == 177)) {
+            displayComp[1] = display[ship_2_block[0][z]][ship_2_block[1][z]] + 256;             //Le statut du bateau en ascii
+            displayComp[2] = display[ship_2_block[2][z]][ship_2_block[3][z]] + 256;             //
+            if ((displayComp[1] == 177) && (displayComp[2] == 177)) {                         //Si les 2 cases sont touchées elles deviennent le nombre 178 ascii
                 display[ship_2_block[0][z]][ship_2_block[1][z]] = 178;
                 display[ship_2_block[2][z]][ship_2_block[3][z]] = 178;
                 nombre_de_bateaux_coule++;
@@ -195,15 +193,14 @@ int generate2BlockShipHorizontal() {
         random_column = rand() % 9; //Génère 2 chiffre aléatoires entre 0 et 9
 
 
-        if (hidden[random_row][random_column] == 0 && hidden[random_row][random_column + 1] == 0) {
+        if (hidden[random_row][random_column] == 0 && hidden[random_row][random_column + 1] == 0) {   //Si le bateau a la place pour etre mis il devient 4 dans le tableau caché
             hidden[random_row][random_column] = ship_number;
             hidden[random_row][random_column + 1] = ship_number;
-            ship_2_block[0][Cycle] = random_row;
+            ship_2_block[0][Cycle] = random_row;           //Stoque la cordonnée dans le tableau ship 2 block
             ship_2_block[1][Cycle] = random_column;
             ship_2_block[2][Cycle] = random_row;
             ship_2_block[3][Cycle] = random_column + 1;
             Cycle++;
-            ship_number++;
 
         } else {
 

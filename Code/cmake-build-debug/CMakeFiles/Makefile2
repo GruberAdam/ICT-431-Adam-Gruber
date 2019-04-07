@@ -49,19 +49,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files (x86)\CLion\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "E:\Program Files (x86)\Hi-Rez Studios\Clion\CLion 2018.3\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files (x86)\CLion\bin\cmake\win\bin\cmake.exe" -E remove -f
+RM = "E:\Program Files (x86)\Hi-Rez Studios\Clion\CLion 2018.3\bin\cmake\win\bin\cmake.exe" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Code
+CMAKE_SOURCE_DIR = E:\ICT-431-Adam-Gruber\Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Code\cmake-build-debug
+CMAKE_BINARY_DIR = E:\ICT-431-Adam-Gruber\Code\cmake-build-debug
 
 #=============================================================================
 # Target rules for target CMakeFiles/Code.dir
@@ -70,7 +70,7 @@ CMAKE_BINARY_DIR = C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Cod
 CMakeFiles/Code.dir/all:
 	$(MAKE) -f CMakeFiles\Code.dir\build.make CMakeFiles/Code.dir/depend
 	$(MAKE) -f CMakeFiles\Code.dir\build.make CMakeFiles/Code.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Code"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Code"
 .PHONY : CMakeFiles/Code.dir/all
 
 # Include target in all.
@@ -80,9 +80,9 @@ all: CMakeFiles/Code.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Code.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles 2
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Code.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Adam.GRUBER\Documents\GitHub\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\ICT-431-Adam-Gruber\Code\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/Code.dir/rule
 
 # Convenience name for target.

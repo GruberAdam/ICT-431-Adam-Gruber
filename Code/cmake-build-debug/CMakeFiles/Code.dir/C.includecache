@@ -6,11 +6,25 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Adam.GRUBER/Documents/GitHub/ICT-431-Adam-Gruber/Code/main.c
+E:/ICT-431-Adam-Gruber/Code/Menu.h
 stdio.h
 -
 stdlib.h
 -
 time.h
 -
+windows.h
+-
+
+E:/ICT-431-Adam-Gruber/Code/main.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+windows.h
+-
+Menu.h
+E:/ICT-431-Adam-Gruber/Code/Menu.h
 
