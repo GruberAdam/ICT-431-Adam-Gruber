@@ -1,0 +1,12 @@
+Pseudo code 2 se comporte sur la fin du programme
+
+#define NB_DE_BATEAUX 4
+
+tant que le nombre de bateaux coulée n'est pas egal au NB_DE_BATEAUX
+on effectue le code 
+
+
+
+
+
+Adam Gruber

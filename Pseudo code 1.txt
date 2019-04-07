@@ -1,0 +1,29 @@
+Pseudo code 1 se comporte sur la demande de la colonne et la ligne :
+
+col_cord = 0
+ligne_cord = 0
+char colonne
+
+tant que col_cord <1 ou col_cord >4 ou ligne_cord < 1 ou ligne cord > 4
+{1
+retour a la ligne
+affiche Ligne
+lire une decimale qui sera stockée dans lign_cord
+
+faire		{2
+afficher Entrez une colonne entre A - J
+lire un string qui sera stocké dans colonne
+col_cord = colonne 
+	si col_cord > 90{3
+		col_cord = col_cord - 32
+		}3
+	col_cord = col_cord -64
+	}2
+}1
+
+
+
+
+
+Adam Gruber
+
