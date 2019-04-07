@@ -9,14 +9,14 @@
 
 
 void menu() {
-    int choix;
+    int choix; //Prend son choix
     do {
-        do {
+        do {                                            //Si son choix est plus petit que 1 ou plus grand 4 4 il répète
             printf("1 - Jouer\n2 - Regles du jeu\n3 - Options\n4 - Quitter\n");
             printf("Faitez votre choix :");
             scanf("%d", &choix);
             if (choix < 1 || choix > 4) {
-                printf("Veuillez choirsir un nombre entre 1 et 4\n\n");
+                printf("Veuillez choirsir un nombre entre 1 et 4\n\n"); //Si son choix est plus petit que 1 ou plus grand 4 il lui envoit un message d'erreur
             }
         }
         while (choix < 1 || choix > 4);
@@ -43,7 +43,7 @@ void menu() {
         }
 
     }
-    while (choix != 1);
+    while (choix != 1); //Tant que le choix est différant de 1 il re affichera le menu
 }
 
 
