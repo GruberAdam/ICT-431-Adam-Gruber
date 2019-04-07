@@ -3,115 +3,116 @@
 //Version 1.0
 //Bataille Navale
 #define NB_DE_BATEAUX 4
+#define MAXCHAR 1000
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
+#include "Menu.h"
 #pragma  execution_character_set("utf-8")
 int nombre_de_bateaux_coule = 0;
-int colonnes;
-int lignes;
-int nombre_lignes_tableau = 10;
-int nombre_colonnes_tableau = 10;
-char display[10][10];   //TODO A REMPLACER LE 10
-int hidden[10][10];     //TODO A REMPLACER LE 10
+int colonnes,lignes;
+int colonne_cordonnee = 0,ligne_cordonnee = 0;
+int random_row = 0,random_column = 0;
+char display[10][10];
+int hidden[10][10];
 int ship_2_block[4][4];
-int colonne_cordonnee = 0;
-int ligne_cordonnee = 0;
-int random_row = 0;
-int random_column = 0;
-int t;
-int vie_du_bateau1 = 0;
-int vie_du_bateau2 = 0;
+int t,z;
 char colonne;
 int displayComp [8];
-int z;
-float temps;
-clock_t t1, t2;
+char nom_pirate;
+int HighScoreSecondsInt;
+char HighScoreName[MAXCHAR];
+char HighScoreSeconds[MAXCHAR];
+FILE *fp;
+char* filename = "Score.txt";
 
 
 
 int main() {
-    printf("%d",CLOCKS_PER_SEC);
 
+    menu();                     //Apelle la fonction "menu"
 
+    printf("\nQuel est votre nom de pirate :");
+    scanf("%s",&nom_pirate);         //Stocke son nom
+    score();
+
+    float temps;
+    clock_t t1, t2;
 
     t1 = clock();
-
-    score();
-    generateShips();
-    displayArray();
-    game();
+    generateShips();             //Apelle la fonction "generateShips"
+    displayArray();              //Apelle la fonction "displayArray"
+    game();                      //Apelle la fonction "game"
     t2 = clock();
-    temps = (float)(t2-t1)/CLOCKS_PER_SEC;
-    printf("\ntemps = %f\n", temps);
+    temps = (int)(t2-t1)/CLOCKS_PER_SEC;
+    printf("\n ton temps = %0.0f secondes\n",temps);
 
-    scanf("%d");
+    if (temps<HighScoreSecondsInt){          //Si le temps a été meilleur que le meilleur temps précedent il prend ça place
+        fp = fopen(filename, "w");
+        fprintf(fp,"%s\n%0.0f",&nom_pirate,temps);
+        fclose(fp);
+    }
+    system("pause");
+
+
+
+
+
+
+
+
 }
 int game() {
-    for (lignes = 0;lignes<10;lignes++){
-        printf("\n");
-        for (colonnes = 0;colonnes<10;colonnes++) {
-            printf("%d",hidden[lignes][colonnes]);
-        }
-    }
 
-    while(nombre_de_bateaux_coule!=NB_DE_BATEAUX) {
+    while(nombre_de_bateaux_coule!=NB_DE_BATEAUX) {           //Continue de jouer tant que tout les bateaux ne sont pas coulé
         ligne_cordonnee = 0;
         colonne_cordonnee = 0;
         while ((ligne_cordonnee < 1) || ((ligne_cordonnee > 10)) || (colonne_cordonnee > 10) ||
                (colonne_cordonnee < 1)) {     //To avoid numbers going higher than 10 or lower than 1
             printf("\n");
             printf("Ligne :");
-            scanf("%d", &ligne_cordonnee);
+            scanf("%d", &ligne_cordonnee);     //Stocke la ligne dans une varible
 
             do {
                 colonne_cordonnee = 0;
                 printf("Entrez la colonne ENTRE A - J:");
-                scanf("%s", &colonne);
-                colonne_cordonnee = colonne;
-                if (colonne_cordonnee > 74) {
-                    colonne_cordonnee = colonne_cordonnee - 32;
+                scanf("%s", &colonne);         //stocke la "lettre" dans une varible char
+                colonne_cordonnee = colonne;   //convertis la lettre en int donc en ascii
+                if (colonne_cordonnee > 90) {     //Si la lettre est plus grand que 90 c'est un miniscule
+                    colonne_cordonnee = colonne_cordonnee - 32;  // faire moins 32 pour la rendre en majuscule
                 }
-                colonne_cordonnee = colonne_cordonnee - 64;
+                colonne_cordonnee = colonne_cordonnee - 64; // fait -64 pour avoir la colonne
             }
-            while(colonne_cordonnee>10);
+            while(colonne_cordonnee>10);       // Si c'est plus grand que 10 (donc J) il redemande.
         }
 
 
-        colonne_cordonnee--;
+        colonne_cordonnee--;         // - 1 pour l'index du tableau
         ligne_cordonnee--;
 
         printf("\n\n\n\n\n\n\n\n\n\n");
 
-        if (hidden[ligne_cordonnee][colonne_cordonnee] == 0) {
+        if (hidden[ligne_cordonnee][colonne_cordonnee] == 0) {          //Si il rate il met la caractère ascii 250(raté)
             display[ligne_cordonnee][colonne_cordonnee] = 250;
         }
-        if (display[ligne_cordonnee][colonne_cordonnee] + 256 == 178) {
-
-        }
-        else {
-            if (hidden[ligne_cordonnee][colonne_cordonnee] !=0) {
-                display[ligne_cordonnee][colonne_cordonnee] = 177;
+        if (display[ligne_cordonnee][colonne_cordonnee] + 256 == 178) {                         //
+        }                                                                                       //Si la case n'est pas coulé et que la case n'est pas ratée mettre le caractère ascii 177 (touché)
+        else {                                                                                  //
+            if (hidden[ligne_cordonnee][colonne_cordonnee] !=0) {                               //
+                display[ligne_cordonnee][colonne_cordonnee] = 177;                              //
 
             }
 
         }
         z=0;
         while (z<4) {
-            //printf("begin:%d",z);
-            displayComp[1] = display[ship_2_block[0][z]][ship_2_block[1][z]] + 256;
+            displayComp[1] = display[ship_2_block[0][z]][ship_2_block[1][z]] + 256;             //La cordonée d'un bout de bateau + 256 =
             displayComp[2] = display[ship_2_block[2][z]][ship_2_block[3][z]] + 256;
-            //printf("\nASIC Value1: %d",displayComp[1]);
-            //printf("\nASIC Value2: %d",displayComp[2]);
             if ((displayComp[1] == 177) && (displayComp[2] == 177)) {
-                //printf("\nMATCH");
-                //printf("\nASIC Value: %d",displayComp[1]);
-                //printf("\nASIC Value2: %d",displayComp[2]);
                 display[ship_2_block[0][z]][ship_2_block[1][z]] = 178;
                 display[ship_2_block[2][z]][ship_2_block[3][z]] = 178;
-                printf("End%d",z);
                 nombre_de_bateaux_coule++;
-
             }
             z++;
         }
@@ -135,9 +136,14 @@ int game() {
 }
 
 int displayArray(){
+    system("CLS");
+
     printf("\nNombre de bateaux existants :%d\n",NB_DE_BATEAUX);
     printf("Nombre de bateaux coule     :%d\n",nombre_de_bateaux_coule);
+    printf("\nMeilleur joueur : %s",HighScoreName);
+    printf("Temps en secondes : %d\n",HighScoreSecondsInt);
     printf("\n %c = Rate   %c = Touche    %c = Coule",250,177,178);
+
 
 
 
@@ -176,17 +182,17 @@ int displayArray(){
 int ship_number = 4;
 
 int generate2BlockShipHorizontal() {
-    for (lignes = 0; lignes < 10; ++lignes) {
-        for (colonnes = 0; colonnes < 10; colonnes++) {
-            hidden[lignes][colonnes] = 0;
-        }
+    for (lignes = 0; lignes < 10; ++lignes) {                  //Créer un tableau 10 sur 10 avec des 0 partout
+        for (colonnes = 0; colonnes < 10; colonnes++) {        //
+            hidden[lignes][colonnes] = 0;                      //
+        }                                                      //
 
     }
     int Cycle = 0;
     srand((unsigned) time(&t));
     while (Cycle < 4) {
-        random_row = rand() % 10;   //Generating 2 random numbers
-        random_column = rand() % 9;
+        random_row = rand() % 10;   //Génère 2 chiffre aléatoires entre 0 et 10
+        random_column = rand() % 9; //Génère 2 chiffre aléatoires entre 0 et 9
 
 
         if (hidden[random_row][random_column] == 0 && hidden[random_row][random_column + 1] == 0) {
@@ -202,28 +208,28 @@ int generate2BlockShipHorizontal() {
         } else {
 
         }
-
-        printf("\n");
-        for (lignes = 0; lignes < 4; lignes++) {
-            printf("\n");
-            for (colonnes = 0; colonnes < 2; colonnes++) {
-                printf("%d", ship_2_block[lignes][colonnes]);
-            }
-        }
     }
 }
 
-int score(){
-    char pirate[256]="EStebaNO";
 
-    FILE*SCORE;
-    SCORE=fopen("Score.txt", "r+");
-    fprintf(SCORE,"%s""\n",pirate);
-    fclose(SCORE);
-}
 
 int generateShips(){
-    generate2BlockShipHorizontal();
+    generate2BlockShipHorizontal(); //Apelle la fonction "generate2BlockShipHorizontal"
 
 }
+int score(){
+    fp = fopen(filename, "r");   // ouvre le fichier en mode "lire"
+    if (fp == NULL){             // Si le fichier n'existe pas il sera ouvert en mode "a" (cree un fichier)
+        fp = fopen(filename, "a");
+        fprintf(fp,"No score set\n9999");     //Ecris "No score set" dans nom et "9999" dans le temps
+        fclose(fp);     //ferme le fichier
+        fopen(filename,"r"); //L'ouvre en mode "lire"
+    }
 
+    fgets(HighScoreName, MAXCHAR, fp);   //Stocke le nom du fichier et les secondes
+    fgets(HighScoreSeconds, 20, fp);     //
+    HighScoreSecondsInt = atoi(HighScoreSeconds); // Transforme les sencondes en int (atoi = ascii to integer)
+
+    fclose(fp); //ferme le fichier
+
+}
